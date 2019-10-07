@@ -1,4 +1,4 @@
-function createGrid() {
+function creategrid() {
   var height = document.getElementById("grid").clientHeight;
   var width = document.getElementById("grid").clientWidth;
   var spotHeight = Math.floor((height - 26) / 25);
@@ -10,11 +10,12 @@ function createGrid() {
   for (var row = 0; row < 25; row++) {
     var trow = document.createElement("tr");
     for (var column = 0; column < 75; column++) {
-      var tcolm = document.createElement("td");
-      tcolm.style.width = spotWidth + "px";
-      tcolm.style.height = spotHeight + "px";
-      tcolm.className += row + "-" + column;
-      trow.appendChild(tcolm);
+      var node = document.createElement("td");
+      node.style.width = spotWidth + "px";
+      node.style.height = spotHeight + "px";
+      // node.className += row + "-" + column;
+      node.setAttribute("id", row + "-" + column);
+      trow.appendChild(node);
     }
     tbody.appendChild(trow);
   }
@@ -23,4 +24,4 @@ function createGrid() {
   tableDiv.appendChild(table);
 }
 
-module.exports = createGrid;
+module.exports = creategrid;
