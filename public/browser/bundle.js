@@ -28,12 +28,13 @@ function creategrid() {
 module.exports = creategrid;
 
 },{}],2:[function(require,module,exports){
-const creategrid = require("./grid.js");
+const creategrid = require("./board.js");
 const wall = require("./wall.js");
 creategrid();
 wall();
+//
 
-},{"./grid.js":1,"./wall.js":3}],3:[function(require,module,exports){
+},{"./board.js":1,"./wall.js":3}],3:[function(require,module,exports){
 show = function(event) {
   event.className += " wall";
 };

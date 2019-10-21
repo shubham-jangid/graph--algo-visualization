@@ -1,0 +1,20 @@
+{
+  "name": "graph--algo-visualization",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "watchify public/browser/main.js -o public/browser/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham-jangid/graph--algo-visualization.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubham-jangid/graph--algo-visualization/issues"
+  },
+  "homepage": "https://github.com/shubham-jangid/graph--algo-visualization#readme"
+}
