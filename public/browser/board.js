@@ -1,4 +1,4 @@
-function creategrid() {
+function board() {
   var height = document.getElementById("grid").clientHeight;
   var width = document.getElementById("grid").clientWidth;
   var spotHeight = Math.floor((height - 26) / 25);
@@ -24,4 +24,4 @@ function creategrid() {
   tableDiv.appendChild(table);
 }
 
-module.exports = creategrid;
+module.exports = board;
