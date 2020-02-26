@@ -14,6 +14,7 @@ function spot(i, j) {
   this.neighbors = [];
   this.previous = undefined;
   this.visited = false;
+  this.wall = false;
 
   this.addNeighbors = function(grid) {
     var i = this.i;
@@ -30,18 +31,18 @@ function spot(i, j) {
     if (j > 0) {
       this.neighbors.push(grid[i][j - 1]);
     }
-    if (i > 0 && j > 0) {
-      this.neighbors.push(grid[i - 1][j - 1]);
-    }
-    if (i < rows - 1 && j > 0) {
-      this.neighbors.push(grid[i + 1][j - 1]);
-    }
-    if (i > 0 && j < columns - 1) {
-      this.neighbors.push(grid[i - 1][j + 1]);
-    }
-    if (i < rows - 1 && j < columns - 1) {
-      this.neighbors.push(grid[i + 1][j + 1]);
-    }
+    // if (i > 0 && j > 0) {
+    //   this.neighbors.push(grid[i - 1][j - 1]);
+    // }
+    // if (i < rows - 1 && j > 0) {
+    //   this.neighbors.push(grid[i + 1][j - 1]);
+    // }
+    // if (i > 0 && j < columns - 1) {
+    //   this.neighbors.push(grid[i - 1][j + 1]);
+    // }
+    // if (i < rows - 1 && j < columns - 1) {
+    //   this.neighbors.push(grid[i + 1][j + 1]);
+    // }
   };
 }
 

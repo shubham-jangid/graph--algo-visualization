@@ -1,6 +1,7 @@
 const wall = require("./../graphics/wall");
 
 function bfs(grid, start, end) {
+  pathAvailable = false;
   var queue = [];
   //   path.push(end);
   ends = end;
@@ -17,16 +18,20 @@ function bfs(grid, start, end) {
       drawPath(start, end);
       break;
     }
+
     for (var i = 0; i < neighbors.length; i++) {
       var w = neighbors[i];
 
-      if (w.visited != true) {
+      if (w.visited != true && w.wall == false) {
         queue.push(w);
         w.previous = v;
         w.visited = true;
         // console.log(w);
       }
     }
+  }
+  if (pathAvailable == false) {
+    window.alert("no path possible");
   }
 
   //   path.push(end);
@@ -39,7 +44,7 @@ function drawPath(start, end) {
     next = next.previous;
   }
   //   console.log(path);
-  console.log(end);
+  //   console.log(end);
 
   wall.draw(start.i + "-" + start.j, "path");
   //   console.log(start.i, start.j);

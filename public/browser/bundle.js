@@ -28,41 +28,62 @@ function board() {
 module.exports = board;
 
 },{}],2:[function(require,module,exports){
+const grid = require("./../node");
+
 //  this function is used to change the color of the grid.
 
 function draw(id, path) {
-  document.getElementById(id).className += path;
+  if (document.getElementById(id).classList.contains(path)) {
+    document.getElementById(id).classList.remove(path);
+  } else {
+    document.getElementById(id).classList.add(path);
+  }
 }
 
 // below function is used to draw the walls by draging the mouse
 // it only draw , it does not add wall to wall array;
 function createWalls() {
-  // var grid = document.getElementById("grid");
-  // var down = false;
-  // var id = "";
-  // function split(str) {
-  //   return str.split("-");
-  // }
-  // grid.addEventListener("mousedown", e => {
-  //   down = true;
-  //   id = e.target.id;
-  //   show(id);
-  // });
-  // grid.addEventListener("mouseup", () => {
-  //   down = false;
-  // });
-  // grid.addEventListener("mouseover", e => {
-  //   if (down) {
-  //     id = e.target.id;
-  //     show(id);
-  //   }
-  // });
+  var gridUi = document.getElementById("grid");
+  var down = false;
+  var id = "";
+
+  gridUi.addEventListener("mousedown", e => {
+    down = true;
+    id = e.target.id;
+    console.log(id);
+    draw(id, "wall");
+    var arr = id.split("-");
+    // console.log(grid[0][0].visited);
+    if (grid[arr[0]][arr[1]].wall != true) {
+      grid[arr[0]][arr[1]].wall = true;
+    } else {
+      grid[arr[0]][arr[1]].wall = false;
+    }
+
+    console.log(grid[arr[0]][arr[1]].wall);
+  });
+  gridUi.addEventListener("mouseup", () => {
+    down = false;
+  });
+  gridUi.addEventListener("mouseover", e => {
+    if (down) {
+      id = e.target.id;
+      draw(id, "wall");
+      var arr = id.split("-");
+      // console.log(grid[0][0].visited);
+      if (grid[arr[0]][arr[1]].wall != true) {
+        grid[arr[0]][arr[1]].wall = true;
+      } else {
+        grid[arr[0]][arr[1]].wall = false;
+      }
+    }
+  });
 }
 
 exports.createWalls = createWalls;
 exports.draw = draw;
 
-},{}],3:[function(require,module,exports){
+},{"./../node":4}],3:[function(require,module,exports){
 const board = require("./board.js");
 const wall = require("./graphics/wall");
 const spot = require("./node");
@@ -73,12 +94,18 @@ board();
 wall.createWalls();
 
 const grid = require("./node");
-// wall.draw("0-0");
-// wall.draw("2-2");
 
 var start = grid[0][0];
-var end = grid[4][74];
-bfs(grid, start, end);
+var end = grid[24][74];
+// document.getElementsByClassName("start-btn").onclick = function() {
+//   console.log("runjkd");
+//   bfs(grid, start, end);
+// };
+var btn = document.getElementById("start-btn");
+btn.addEventListener("mousedown", e => {
+  console.log("runjkd");
+  bfs(grid, start, end);
+});
 
 },{"./board.js":1,"./graphics/wall":2,"./node":4,"./pathfindingAlgorithm/dfs":5}],4:[function(require,module,exports){
 var rows = 25;
@@ -97,6 +124,7 @@ function spot(i, j) {
   this.neighbors = [];
   this.previous = undefined;
   this.visited = false;
+  this.wall = false;
 
   this.addNeighbors = function(grid) {
     var i = this.i;
@@ -113,18 +141,18 @@ function spot(i, j) {
     if (j > 0) {
       this.neighbors.push(grid[i][j - 1]);
     }
-    if (i > 0 && j > 0) {
-      this.neighbors.push(grid[i - 1][j - 1]);
-    }
-    if (i < rows - 1 && j > 0) {
-      this.neighbors.push(grid[i + 1][j - 1]);
-    }
-    if (i > 0 && j < columns - 1) {
-      this.neighbors.push(grid[i - 1][j + 1]);
-    }
-    if (i < rows - 1 && j < columns - 1) {
-      this.neighbors.push(grid[i + 1][j + 1]);
-    }
+    // if (i > 0 && j > 0) {
+    //   this.neighbors.push(grid[i - 1][j - 1]);
+    // }
+    // if (i < rows - 1 && j > 0) {
+    //   this.neighbors.push(grid[i + 1][j - 1]);
+    // }
+    // if (i > 0 && j < columns - 1) {
+    //   this.neighbors.push(grid[i - 1][j + 1]);
+    // }
+    // if (i < rows - 1 && j < columns - 1) {
+    //   this.neighbors.push(grid[i + 1][j + 1]);
+    // }
   };
 }
 
@@ -151,6 +179,7 @@ module.exports = grid;
 const wall = require("./../graphics/wall");
 
 function bfs(grid, start, end) {
+  pathAvailable = false;
   var queue = [];
   //   path.push(end);
   ends = end;
@@ -167,16 +196,20 @@ function bfs(grid, start, end) {
       drawPath(start, end);
       break;
     }
+
     for (var i = 0; i < neighbors.length; i++) {
       var w = neighbors[i];
 
-      if (w.visited != true) {
+      if (w.visited != true && w.wall == false) {
         queue.push(w);
         w.previous = v;
         w.visited = true;
         // console.log(w);
       }
     }
+  }
+  if (pathAvailable == false) {
+    window.alert("no path possible");
   }
 
   //   path.push(end);
@@ -189,7 +222,7 @@ function drawPath(start, end) {
     next = next.previous;
   }
   //   console.log(path);
-  console.log(end);
+  //   console.log(end);
 
   wall.draw(start.i + "-" + start.j, "path");
   //   console.log(start.i, start.j);
