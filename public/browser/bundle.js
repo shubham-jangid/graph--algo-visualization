@@ -28,14 +28,75 @@ function board() {
 module.exports = board;
 
 },{}],2:[function(require,module,exports){
+const wall = require("./../graphics/wall");
+
+function drawPath(start, end, visitedArray) {
+  var backwardPath = [];
+
+  backwardPath.push(end);
+  console.log(end);
+
+  var next = end.previous;
+  while (next.previous != undefined) {
+    backwardPath.push(next);
+    next = next.previous;
+  }
+  backwardPath.push(start);
+
+  var forwardPath = [];
+
+  for (var i = backwardPath.length - 1; i >= 0; i--) {
+    var j = 0;
+    forwardPath.push(backwardPath[i]);
+    j = j + 1;
+  }
+
+  var vi = 0,
+    pi = 0;
+  console.log(forwardPath.length);
+  for (var t = 0; t < forwardPath.length + visitedArray.length; t++) {
+    if (t < visitedArray.length) {
+      (function(t) {
+        setTimeout(function() {
+          wall.draw(visitedArray[vi].i + "-" + visitedArray[vi].j, "visited");
+          vi++;
+        }, 5 * t);
+      })(t);
+    } else {
+      (function(i) {
+        setTimeout(function() {
+          wall.draw(forwardPath[pi].i + "-" + forwardPath[pi].j, "path");
+          pi++;
+        }, 5 * t);
+      })(t);
+    }
+  }
+  console.log(t);
+}
+module.exports = drawPath;
+
+},{"./../graphics/wall":3}],3:[function(require,module,exports){
 const grid = require("./../node");
 
 //  this function is used to change the color of the grid.
 
 function draw(id, path) {
-  if (document.getElementById(id).classList.contains(path)) {
-    document.getElementById(id).classList.remove(path);
+  if (path == "wall") {
+    document.getElementById(id).classList.remove("visited", "path");
+    if (document.getElementById(id).classList.contains(path)) {
+      document.getElementById(id).classList.remove(path);
+    } else {
+      document.getElementById(id).classList.add(path);
+    }
+  } else if (path == "visited") {
+    document
+      .getElementById(id)
+      .classList.remove("wall", "visited", "path", "instantvisited");
+    document.getElementById(id).classList.add(path, "instantvisited");
   } else {
+    document
+      .getElementById(id)
+      .classList.remove("wall", "visited", "path", "instantvisited");
     document.getElementById(id).classList.add(path);
   }
 }
@@ -83,7 +144,7 @@ function createWalls() {
 exports.createWalls = createWalls;
 exports.draw = draw;
 
-},{"./../node":4}],3:[function(require,module,exports){
+},{"./../node":5}],4:[function(require,module,exports){
 const board = require("./board.js");
 const wall = require("./graphics/wall");
 const spot = require("./node");
@@ -95,19 +156,16 @@ wall.createWalls();
 
 const grid = require("./node");
 
-var start = grid[0][0];
-var end = grid[24][74];
-// document.getElementsByClassName("start-btn").onclick = function() {
-//   console.log("runjkd");
-//   bfs(grid, start, end);
-// };
+var start = grid[2][5];
+var end = grid[2][23];
+
 var btn = document.getElementById("start-btn");
 btn.addEventListener("mousedown", e => {
   console.log("runjkd");
   bfs(grid, start, end);
 });
 
-},{"./board.js":1,"./graphics/wall":2,"./node":4,"./pathfindingAlgorithm/dfs":5}],4:[function(require,module,exports){
+},{"./board.js":1,"./graphics/wall":3,"./node":5,"./pathfindingAlgorithm/dfs":6}],5:[function(require,module,exports){
 var rows = 25;
 var columns = 75;
 
@@ -175,14 +233,15 @@ for (var i = 0; i < rows; i++) {
 // console.log(grid);
 module.exports = grid;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
+const drawPath = require("./../graphics/drawPath");
 const wall = require("./../graphics/wall");
 
 function bfs(grid, start, end) {
-  pathAvailable = false;
+  console.log(end);
   var queue = [];
-  //   path.push(end);
-  ends = end;
+  var visitedArray = [];
+  pathAvailable = false;
 
   queue.push(start);
   start.visited = true;
@@ -192,8 +251,8 @@ function bfs(grid, start, end) {
     var neighbors = v.neighbors;
 
     if (v.i == end.i && v.j == end.j) {
-      // console.log("reached");
-      drawPath(start, end);
+      pathAvailable = true;
+
       break;
     }
 
@@ -204,35 +263,34 @@ function bfs(grid, start, end) {
         queue.push(w);
         w.previous = v;
         w.visited = true;
-        // console.log(w);
+        visitedArray.push(w);
+
+        // wall.draw(w.i + "-" + w.j, "visited");
       }
     }
   }
+
   if (pathAvailable == false) {
     window.alert("no path possible");
+  } else {
+    drawPath(start, end, visitedArray);
   }
 
-  //   path.push(end);
-}
-function drawPath(start, end) {
-  var path = [];
-  var next = end.previous;
-  while (next.previous != undefined) {
-    path.push(next);
-    next = next.previous;
-  }
-  //   console.log(path);
-  //   console.log(end);
+  // function drawVisited(visitedArray) {
+  //   console.log(visitedArray.length);
+  //   for (var i = 0; i < visitedArray.length; i++) {
+  //     (function(i) {
+  //       setTimeout(function() {
+  //         wall.draw(visitedArray[i].i + "-" + visitedArray[i].j, "visited");
+  //       }, 50 * i);
+  //     })(i);
+  //   }
+  // }
+  // console.log(visitedArray);
 
-  wall.draw(start.i + "-" + start.j, "path");
-  //   console.log(start.i, start.j);
-  wall.draw(end.i + "-" + end.j, "path");
-
-  for (var i = 0; i < path.length; i++) {
-    wall.draw(path[i].i + "-" + path[i].j, "path");
-  }
+  // drawVisited(visitedArray);
 }
 
 module.exports = bfs;
 
-},{"./../graphics/wall":2}]},{},[3]);
+},{"./../graphics/drawPath":2,"./../graphics/wall":3}]},{},[4]);

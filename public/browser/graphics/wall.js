@@ -3,9 +3,22 @@ const grid = require("./../node");
 //  this function is used to change the color of the grid.
 
 function draw(id, path) {
-  if (document.getElementById(id).classList.contains(path)) {
-    document.getElementById(id).classList.remove(path);
+  if (path == "wall") {
+    document.getElementById(id).classList.remove("visited", "path");
+    if (document.getElementById(id).classList.contains(path)) {
+      document.getElementById(id).classList.remove(path);
+    } else {
+      document.getElementById(id).classList.add(path);
+    }
+  } else if (path == "visited") {
+    document
+      .getElementById(id)
+      .classList.remove("wall", "visited", "path", "instantvisited");
+    document.getElementById(id).classList.add(path, "instantvisited");
   } else {
+    document
+      .getElementById(id)
+      .classList.remove("wall", "visited", "path", "instantvisited");
     document.getElementById(id).classList.add(path);
   }
 }
