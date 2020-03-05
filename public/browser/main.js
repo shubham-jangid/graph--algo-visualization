@@ -1,19 +1,25 @@
 const board = require("./board.js");
-const wall = require("./graphics/wall");
-const spot = require("./node");
+const createWall = require("./graphics/createWall");
 const bfs = require("./pathfindingAlgorithm/dfs");
+const startNode = require("./graphics/startAndEndNode");
+// startNode();
 
 board();
 
-wall.createWalls();
+startNode();
+createWall();
 
 const grid = require("./node");
+// for (var i = 0; i < 24; i++) {
+//   for (var j = 0; j < 74; j++) {
+//     if (grid[i][j].start == true) start = grid[i][j];
+//   }
+// }
 
-var start = grid[2][5];
+var start = grid[2][2];
 var end = grid[2][23];
 
-var btn = document.getElementById("start-btn");
-btn.addEventListener("mousedown", e => {
-  console.log("runjkd");
+document.getElementById("start-btn").addEventListener("mousedown", e => {
+  console.log(start);
   bfs(grid, start, end);
 });

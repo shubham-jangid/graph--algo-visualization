@@ -10,6 +10,8 @@ for (var i = 0; i < rows; i++) {
 function spot(i, j) {
   this.i = i;
   this.j = j;
+  this.start = false;
+  this.target = false;
 
   this.neighbors = [];
   this.previous = undefined;
@@ -55,12 +57,7 @@ for (var i = 0; i < rows; i++) {
 for (var i = 0; i < rows; i++) {
   for (var j = 0; j < columns; j++) {
     grid[i][j].addNeighbors(grid);
-    // console.log(grid[i][j]);
   }
 }
 
-// exports.spot = spot;
-// exports.grid = grid;
-// module.exports = spot;
-// console.log(grid);
 module.exports = grid;

@@ -1,10 +1,9 @@
-const wall = require("./../graphics/wall");
+const animation = require("./animation");
 
 function drawPath(start, end, visitedArray) {
   var backwardPath = [];
 
   backwardPath.push(end);
-  console.log(end);
 
   var next = end.previous;
   while (next.previous != undefined) {
@@ -23,24 +22,22 @@ function drawPath(start, end, visitedArray) {
 
   var vi = 0,
     pi = 0;
-  console.log(forwardPath.length);
   for (var t = 0; t < forwardPath.length + visitedArray.length; t++) {
     if (t < visitedArray.length) {
       (function(t) {
         setTimeout(function() {
-          wall.draw(visitedArray[vi].i + "-" + visitedArray[vi].j, "visited");
+          animation(visitedArray[vi].i + "-" + visitedArray[vi].j, "visited");
           vi++;
         }, 5 * t);
       })(t);
     } else {
       (function(i) {
         setTimeout(function() {
-          wall.draw(forwardPath[pi].i + "-" + forwardPath[pi].j, "path");
+          animation(forwardPath[pi].i + "-" + forwardPath[pi].j, "path");
           pi++;
         }, 5 * t);
       })(t);
     }
   }
-  console.log(t);
 }
 module.exports = drawPath;
