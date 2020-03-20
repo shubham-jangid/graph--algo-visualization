@@ -47,26 +47,23 @@ td {
 }
 
 .start {
-  /* border: 1px solid rgb(175, 216, 248); */
   background-image: url(start.png);
-  /* background-color: rgb(255, 254, 106); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  /* animation-name: specialNodes; */
-  /* animation-duration: 2s; */
-  /* animation-timing-function: ease-out;
-  animation-delay: 0;
-  animation-direction: alternate;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-play-state: running; */
+}
+
+.target {
+  background-image: url(target.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .instantvisited {
   border: 1px solid rgb(175, 216, 248);
   background-color: rgba(0, 190, 218, 0.75);
-  /*background-color: rgba(178, 67, 255, 0.75);*/
+  background-color: rgba(178, 67, 255, 0.75);
 }
 .wall {
   animation-name: wallAnimation;
@@ -97,12 +94,12 @@ td {
 }
 
 .path {
-  /*border: 1px solid rgb(175, 216, 248);*/
-  /* background-color: rgb(255, 254, 106); */
+  border: 1px solid rgb(175, 216, 248);
+  background-color: rgb(255, 254, 106);
   background-color: red;
-  /*background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;*/
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   animation-name: triangletwo;
   animation-duration: 1.5s;
   animation-timing-function: linear;
@@ -115,26 +112,20 @@ td {
 @keyframes triangletwo {
   0% {
     transform: scale(0.6);
-    /* background-color: rgb(255, 254, 106); */
-    background-color: red;
+    background-color: rgb(255, 254, 106);
   }
 
   50% {
     transform: scale(1.2);
-    /* background-color: rgb(255, 254, 106); */
-    background-color: red;
+    background-color: rgb(255, 254, 106);
   }
 
   100% {
     transform: scale(1);
-    /* background-color: rgb(255, 254, 106); */
-    background-color: red;
+    background-color: rgb(255, 254, 106);
   }
 }
 .visited {
-  /* background-color: rgb(175, 216, 248); */
-  /* background-color: #845ec2; */
-
   border: 1px solid rgb(175, 216, 248);
   animation-name: visitedAnimation;
   animation-duration: 0.5s;

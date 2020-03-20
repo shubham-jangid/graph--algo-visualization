@@ -92,7 +92,7 @@ function createWalls() {
 
 module.exports = createWalls;
 
-},{"./../node":7}],4:[function(require,module,exports){
+},{"./../node":6}],4:[function(require,module,exports){
 const animation = require("./animation");
 
 function drawPath(start, end, visitedArray) {
@@ -138,86 +138,30 @@ function drawPath(start, end, visitedArray) {
 module.exports = drawPath;
 
 },{"./animation":2}],5:[function(require,module,exports){
-const grid = require("./../node");
-
-function startNode() {
-  var gridUi = document.getElementById("grid");
-  var gridUi = document.getElementById("grid");
-  var downy = false;
-  var id = "";
-  var start;
-  start = grid[10][20];
-  start.start = true;
-  document.getElementById(start.i + "-" + start.j).classList.add("start");
-
-  var elist = [];
-  var downy = false;
-
-  // var startingNode = "10-20";
-
-  gridUi.addEventListener("mouseup", () => {
-    downy = false;
-    elist.length = 0;
-  });
-
-  gridUi.addEventListener("mousedown", e => {
-    var id = e.target.id;
-    var cell = document.getElementById(id);
-    if (cell.classList.contains("start")) {
-      console.log("skldjf");
-      downy = true;
-      elist.push(id);
-    }
-  });
-
-  gridUi.addEventListener("mouseover", e => {
-    if (downy) {
-      var id = e.target.id;
-      elist.push(id);
-      var previousStart = elist.shift();
-      startingNode = elist[0];
-      document.getElementById(previousStart).classList.remove("start");
-      var arr1 = previousStart.split("-");
-      grid[arr1[0]][arr1[1]].start = false;
-      document.getElementById(startingNode).classList.remove("wall");
-      document.getElementById(startingNode).classList.add("start");
-      var arr2 = startingNode.split("-");
-      grid[arr2[0]][arr2[1]].start = true;
-      console.log(grid[arr2[0]][arr2[1]].start);
-    }
-  });
-}
-
-module.exports = startNode;
-
-},{"./../node":7}],6:[function(require,module,exports){
 const board = require("./board.js");
 const createWall = require("./graphics/createWall");
 const bfs = require("./pathfindingAlgorithm/dfs");
-const startNode = require("./graphics/startAndEndNode");
+// const startNode = require("./graphics/startAndEndNode");
 // startNode();
 
 board();
 
-startNode();
+// startNode();
 createWall();
 
 const grid = require("./node");
-// for (var i = 0; i < 24; i++) {
-//   for (var j = 0; j < 74; j++) {
-//     if (grid[i][j].start == true) start = grid[i][j];
-//   }
-// }
 
 var start = grid[2][2];
 var end = grid[2][23];
+document.getElementById("2-2").classList.add("start");
+document.getElementById("2-23").classList.add("target");
 
 document.getElementById("start-btn").addEventListener("mousedown", e => {
   console.log(start);
   bfs(grid, start, end);
 });
 
-},{"./board.js":1,"./graphics/createWall":3,"./graphics/startAndEndNode":5,"./node":7,"./pathfindingAlgorithm/dfs":8}],7:[function(require,module,exports){
+},{"./board.js":1,"./graphics/createWall":3,"./node":6,"./pathfindingAlgorithm/dfs":7}],6:[function(require,module,exports){
 var rows = 25;
 var columns = 75;
 
@@ -282,7 +226,7 @@ for (var i = 0; i < rows; i++) {
 
 module.exports = grid;
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 const drawPath = require("./../graphics/drawPath");
 
 function bfs(grid, start, end) {
@@ -325,4 +269,4 @@ function bfs(grid, start, end) {
 
 module.exports = bfs;
 
-},{"./../graphics/drawPath":4}]},{},[6]);
+},{"./../graphics/drawPath":4}]},{},[5]);
