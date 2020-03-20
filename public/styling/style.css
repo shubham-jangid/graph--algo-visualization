@@ -2,23 +2,111 @@ html,
 body {
   padding: 0;
   margin: 0;
-}
-
-.navbar-container {
-  background-color: red;
-  height: 10vh;
-
-  width: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .navbar-1 {
   height: 50%;
+  color: #fffcf2;
+  padding: 10px;
+
   background-color: #34495e;
-  display: flex;
 }
+.logo {
+  font-size: 24px;
+  color: #fffcf2;
+  padding: 10px 50px;
+  display: inline-block;
+}
+.algorithm {
+  display: inline-block;
+  font-size: 20px;
+  min-width: 150px;
+  padding-bottom: 20px;
+  cursor: pointer;
+}
+
+#caret {
+  background-image: url(caret.png);
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background-size: contain;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: #34495e;
+  min-width: 150px;
+  z-index: 1;
+}
+.algorithm:hover .dropdown {
+  display: block;
+}
+
+.dropdown div {
+  padding: 10px;
+}
+.dropdown div:hover {
+  background-color: #1abc9c;
+  padding: 10px;
+}
+#visualize-btn {
+  padding: 10px;
+  width: 100px;
+  background-color: #1abc9c;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: #fffcf2;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 100px;
+}
+
+#clearboard {
+  display: inline-block;
+  font-size: 20px;
+  min-width: 150px;
+  padding: 10px;
+  cursor: pointer;
+}
+#speed {
+  display: inline-block;
+  font-size: 20px;
+  min-width: 150px;
+  padding: 10px;
+  cursor: pointer;
+}
+
 .navbar-2 {
-  height: 50%;
-  background-color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-2 label {
+  color: #333745;
+  font-size: 20px;
+  font-weight: 400;
+}
+.navbar-2 input {
+  width: 150px;
+  border-radius: 10px;
+  padding: 5px 5px;
+  size: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+/* input[type="number"] :: placeholder {
+  text-align: center;
+} */
+#startValue {
+  margin: 0 25px;
+}
+#targetValue {
+  margin: 0 25px;
 }
 
 .grid-container {

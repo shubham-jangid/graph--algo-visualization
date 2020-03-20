@@ -16,7 +16,10 @@ var end = grid[2][23];
 document.getElementById("2-2").classList.add("start");
 document.getElementById("2-23").classList.add("target");
 
-document.getElementById("start-btn").addEventListener("mousedown", e => {
+// var algo = undefined;
+// document.getElementById("algo")
+
+document.getElementById("visualize-btn").addEventListener("mousedown", e => {
   console.log(start);
   bfs(grid, start, end);
 });

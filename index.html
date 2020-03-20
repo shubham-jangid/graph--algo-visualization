@@ -12,25 +12,44 @@
 
 <body>
     <div class="navbar-container">
-        <div class="navbar-1">
-            <button id="start-btn">start</button>
 
+        <div class="navbar-1">
+            <div class="logo">Pathfinding visualiser</div>
+            <div class="algorithm">Algorithms
+                <span id="caret"></span>
+                <div class="dropdown">
+                    <div id="Dijkstras">Dijkstra's Algorithm</div>
+                    <div id="Depth-first">Depth-first Search</div>
+                    <div id="A*">A* Search</div>
+                    <div id="Breadth-first">Breadth-first Search</div>
+                </div>
+            </div>
+            <button id="visualize-btn">Visualize!</button>
+            <div id="clearboard">Clear Board</div>
+            <div id="speed">Speed</div>
         </div>
+
         <div class="navbar-2">
+            <div id="startValue">
+                <label for="starting node value">starting node value :</label>
+                <input type="number" placeholder="row">
+                <input type="number" placeholder="column">
+
+            </div>
+            <div id="targetValue">
+                <label for="starting node value">target node value :</label>
+
+                <input type="number" placeholder="row">
+                <input type="number" placeholder="column">
+            </div>
 
         </div>
 
     </div>
 
     <div class="grid-container">
-
-
-
-
         <div id="grid">
-
         </div>
-
     </div>
 
 
