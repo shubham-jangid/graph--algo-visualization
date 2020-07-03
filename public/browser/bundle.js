@@ -389,34 +389,30 @@ createWall();
 setStart(start.current, start.next);
 setTarget(target.current, target.next);
 
-// // code to get the selected algorithm
-// var algorithm = undefined;
+var algorithm = undefined;
 
-// var elements = document.getElementsByClassName("dropdownlist");
-// console.log(elements);
-// var myFunction = function () {
-//   algorithm = this.getAttribute("name");
-// };
+function getListValue() {
+  var selectedOption, st;
+  selectedOption = document.getElementById("Algorithms").selectedIndex;
+
+  algorithm = document.getElementById("Algorithms").options[selectedOption]
+    .value;
+  console.log(algorithm);
+}
 
 document.getElementById("visualize-btn").addEventListener("mousedown", (e) => {
-  // if (algorithm == undefined) {
-  //   window.alert("chooes the algorithm");
-  // } else {
-  //   switch (algorithm) {
-  //     case Dijkstras:
-  //       console.log(algorithm);
-  //       bfs(grid, start.current, target.current);
-  //       break;
-  //     case y:
-  //       // code block
-  //       break;
-  //     default:
-  //     // code block
-  //   }
-  // }
-  // console.log(algorithm);
-  console.log(start.current);
-  bfs(grid, start.current, target.current);
+  getListValue();
+  console.log(algorithm);
+
+  if (algorithm === "undefined") {
+    window.alert("chooes the algorithm");
+  } else {
+    switch (algorithm) {
+      case "Dijkstras":
+        bfs(grid, start.current, target.current);
+        break;
+    }
+  }
 });
 
 },{"./board.js":1,"./global_start":2,"./golbal_target":3,"./graphics/createWall":5,"./graphics/moveStart":7,"./graphics/moveTarget":8,"./graphics/set/setStart":9,"./graphics/set/setTarget":10,"./grid":11,"./pathfindingAlgorithm/dfs":13}],13:[function(require,module,exports){

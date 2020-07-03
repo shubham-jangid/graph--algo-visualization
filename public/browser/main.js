@@ -18,32 +18,28 @@ createWall();
 setStart(start.current, start.next);
 setTarget(target.current, target.next);
 
-// // code to get the selected algorithm
-// var algorithm = undefined;
+var algorithm = undefined;
 
-// var elements = document.getElementsByClassName("dropdownlist");
-// console.log(elements);
-// var myFunction = function () {
-//   algorithm = this.getAttribute("name");
-// };
+function getListValue() {
+  var selectedOption, st;
+  selectedOption = document.getElementById("Algorithms").selectedIndex;
+
+  algorithm = document.getElementById("Algorithms").options[selectedOption]
+    .value;
+  console.log(algorithm);
+}
 
 document.getElementById("visualize-btn").addEventListener("mousedown", (e) => {
-  // if (algorithm == undefined) {
-  //   window.alert("chooes the algorithm");
-  // } else {
-  //   switch (algorithm) {
-  //     case Dijkstras:
-  //       console.log(algorithm);
-  //       bfs(grid, start.current, target.current);
-  //       break;
-  //     case y:
-  //       // code block
-  //       break;
-  //     default:
-  //     // code block
-  //   }
-  // }
-  // console.log(algorithm);
-  console.log(start.current);
-  bfs(grid, start.current, target.current);
+  getListValue();
+  console.log(algorithm);
+
+  if (algorithm === "undefined") {
+    window.alert("chooes the algorithm");
+  } else {
+    switch (algorithm) {
+      case "Dijkstras":
+        bfs(grid, start.current, target.current);
+        break;
+    }
+  }
 });
