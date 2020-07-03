@@ -1,6 +1,5 @@
 const gridUI = require("./board.js");
 const createWall = require("./graphics/createWall");
-const bfs = require("./pathfindingAlgorithm/dfs");
 const moveStart = require("./graphics/moveStart");
 const moveTarget = require("./graphics/moveTarget");
 const setTarget = require("./graphics/set/setTarget");
@@ -8,6 +7,8 @@ const setStart = require("./graphics/set/setStart");
 const grid = require("./grid");
 var start = require("./global_start");
 var target = require("./golbal_target");
+const bfs = require("./pathfindingAlgorithm/bfs");
+const dfs = require("./pathfindingAlgorithm/dfs");
 
 gridUI();
 moveStart();
@@ -26,19 +27,20 @@ function getListValue() {
 
   algorithm = document.getElementById("Algorithms").options[selectedOption]
     .value;
-  console.log(algorithm);
 }
 
 document.getElementById("visualize-btn").addEventListener("mousedown", (e) => {
   getListValue();
-  console.log(algorithm);
 
   if (algorithm === "undefined") {
     window.alert("chooes the algorithm");
   } else {
     switch (algorithm) {
-      case "Dijkstras":
+      case "Breadth-first":
         bfs(grid, start.current, target.current);
+        break;
+      case "Depth-first":
+        dfs(grid, start.current, target.current);
         break;
     }
   }

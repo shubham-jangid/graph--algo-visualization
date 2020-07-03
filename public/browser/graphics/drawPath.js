@@ -5,9 +5,8 @@ function drawPath(start, end, visitedArray) {
 
   backwardPath.push(end);
 
-  console.log(end);
   var next = end.previous;
-  console.log(next);
+
   while (next.previous != undefined) {
     backwardPath.push(next);
     next = next.previous;

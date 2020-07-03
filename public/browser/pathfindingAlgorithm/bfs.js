@@ -1,6 +1,6 @@
 const drawPath = require("../graphics/drawPath");
 
-function dfs(grid, start, end) {
+function bfs(grid, start, end) {
   var startIndexes = start.split("-");
   var start_i = startIndexes[0];
   var start_j = startIndexes[1];
@@ -11,38 +11,36 @@ function dfs(grid, start, end) {
   var end_j = endIndexes[1];
   var end = grid[end_i][end_j];
 
-  var stack = new Array();
+  var queue = [];
   var visitedArray = [];
   pathAvailable = false;
 
-  stack.push(start);
+  queue.push(start);
+  start.visited = true;
 
-  var x = 1;
-  while (stack.length != 0) {
-    var v = stack.pop();
+  while (queue.length != 0) {
+    var v = queue.shift();
+    // console.log(v);
     var neighbors = v.neighbors;
-    console.log(v);
-    console.log(neighbors);
+    // console.log(neighbors);
 
     if (v.i == end.i && v.j == end.j) {
       pathAvailable = true;
       break;
     }
 
-    if (v.visited != true && v.wall == false) {
-      v.visited = true;
-      visitedArray.push(v);
-      for (var i = 0; i < neighbors.length; i++) {
-        var w = neighbors[i];
-        // if (w.visited != true && w.wall == false) {
-        stack.push(w);
+    for (var i = 0; i < neighbors.length; i++) {
+      var w = neighbors[i];
+
+      if (w.visited != true && w.wall == false) {
+        queue.push(w);
         w.previous = v;
         w.visited = true;
         visitedArray.push(w);
-        // }
       }
     }
   }
+
   if (pathAvailable == false) {
     // drawPath("", "", visitedArray);
     window.alert("no path possible");
@@ -51,4 +49,4 @@ function dfs(grid, start, end) {
   }
 }
 
-module.exports = dfs;
+module.exports = bfs;

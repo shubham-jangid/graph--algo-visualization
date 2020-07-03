@@ -117,9 +117,8 @@ function drawPath(start, end, visitedArray) {
 
   backwardPath.push(end);
 
-  console.log(end);
   var next = end.previous;
-  console.log(next);
+
   while (next.previous != undefined) {
     backwardPath.push(next);
     next = next.previous;
@@ -371,7 +370,6 @@ module.exports = grid;
 },{}],12:[function(require,module,exports){
 const gridUI = require("./board.js");
 const createWall = require("./graphics/createWall");
-const bfs = require("./pathfindingAlgorithm/dfs");
 const moveStart = require("./graphics/moveStart");
 const moveTarget = require("./graphics/moveTarget");
 const setTarget = require("./graphics/set/setTarget");
@@ -379,6 +377,8 @@ const setStart = require("./graphics/set/setStart");
 const grid = require("./grid");
 var start = require("./global_start");
 var target = require("./golbal_target");
+const bfs = require("./pathfindingAlgorithm/bfs");
+const dfs = require("./pathfindingAlgorithm/dfs");
 
 gridUI();
 moveStart();
@@ -397,33 +397,33 @@ function getListValue() {
 
   algorithm = document.getElementById("Algorithms").options[selectedOption]
     .value;
-  console.log(algorithm);
 }
 
 document.getElementById("visualize-btn").addEventListener("mousedown", (e) => {
   getListValue();
-  console.log(algorithm);
 
   if (algorithm === "undefined") {
     window.alert("chooes the algorithm");
   } else {
     switch (algorithm) {
-      case "Dijkstras":
+      case "Breadth-first":
         bfs(grid, start.current, target.current);
+        break;
+      case "Depth-first":
+        dfs(grid, start.current, target.current);
         break;
     }
   }
 });
 
-},{"./board.js":1,"./global_start":2,"./golbal_target":3,"./graphics/createWall":5,"./graphics/moveStart":7,"./graphics/moveTarget":8,"./graphics/set/setStart":9,"./graphics/set/setTarget":10,"./grid":11,"./pathfindingAlgorithm/dfs":13}],13:[function(require,module,exports){
-const drawPath = require("./../graphics/drawPath");
+},{"./board.js":1,"./global_start":2,"./golbal_target":3,"./graphics/createWall":5,"./graphics/moveStart":7,"./graphics/moveTarget":8,"./graphics/set/setStart":9,"./graphics/set/setTarget":10,"./grid":11,"./pathfindingAlgorithm/bfs":13,"./pathfindingAlgorithm/dfs":14}],13:[function(require,module,exports){
+const drawPath = require("../graphics/drawPath");
 
 function bfs(grid, start, end) {
   var startIndexes = start.split("-");
   var start_i = startIndexes[0];
   var start_j = startIndexes[1];
   var start = grid[start_i][start_j];
-  console.log(start_i, start_j);
 
   var endIndexes = end.split("-");
   var end_i = endIndexes[0];
@@ -439,11 +439,12 @@ function bfs(grid, start, end) {
 
   while (queue.length != 0) {
     var v = queue.shift();
+    // console.log(v);
     var neighbors = v.neighbors;
+    // console.log(neighbors);
 
     if (v.i == end.i && v.j == end.j) {
       pathAvailable = true;
-
       break;
     }
 
@@ -469,4 +470,60 @@ function bfs(grid, start, end) {
 
 module.exports = bfs;
 
-},{"./../graphics/drawPath":6}]},{},[12]);
+},{"../graphics/drawPath":6}],14:[function(require,module,exports){
+const drawPath = require("../graphics/drawPath");
+
+function dfs(grid, start, end) {
+  var startIndexes = start.split("-");
+  var start_i = startIndexes[0];
+  var start_j = startIndexes[1];
+  var start = grid[start_i][start_j];
+
+  var endIndexes = end.split("-");
+  var end_i = endIndexes[0];
+  var end_j = endIndexes[1];
+  var end = grid[end_i][end_j];
+
+  var stack = new Array();
+  var visitedArray = [];
+  pathAvailable = false;
+
+  stack.push(start);
+
+  var x = 1;
+  while (stack.length != 0) {
+    var v = stack.pop();
+    var neighbors = v.neighbors;
+    console.log(v);
+    console.log(neighbors);
+
+    if (v.i == end.i && v.j == end.j) {
+      pathAvailable = true;
+      break;
+    }
+
+    if (v.visited != true && v.wall == false) {
+      v.visited = true;
+      visitedArray.push(v);
+      for (var i = 0; i < neighbors.length; i++) {
+        var w = neighbors[i];
+        // if (w.visited != true && w.wall == false) {
+        stack.push(w);
+        w.previous = v;
+        w.visited = true;
+        visitedArray.push(w);
+        // }
+      }
+    }
+  }
+  if (pathAvailable == false) {
+    // drawPath("", "", visitedArray);
+    window.alert("no path possible");
+  } else {
+    drawPath(start, end, visitedArray);
+  }
+}
+
+module.exports = dfs;
+
+},{"../graphics/drawPath":6}]},{},[12]);
