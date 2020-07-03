@@ -1,4 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+// this function creat the grid UI
 function board() {
   var height = document.getElementById("grid").clientHeight;
   var width = document.getElementById("grid").clientWidth;
@@ -28,6 +29,22 @@ function board() {
 module.exports = board;
 
 },{}],2:[function(require,module,exports){
+var start = {
+  current: "2-3",
+  next: null,
+};
+
+module.exports = start;
+
+},{}],3:[function(require,module,exports){
+var target = {
+  current: "12-23",
+  next: null,
+};
+
+module.exports = target;
+
+},{}],4:[function(require,module,exports){
 function animation(id, path) {
   if (path == "visited") {
     document
@@ -43,19 +60,19 @@ function animation(id, path) {
 }
 module.exports = animation;
 
-},{}],3:[function(require,module,exports){
-const grid = require("./../node");
+},{}],5:[function(require,module,exports){
+const grid = require("../grid");
 
 function createWalls() {
-  var gridUi = document.getElementById("grid");
+  var gridUI = document.getElementById("grid");
   var down = false;
   var id = "";
 
-  gridUi.addEventListener("mouseup", () => {
+  gridUI.addEventListener("mouseup", () => {
     down = false;
   });
 
-  gridUi.addEventListener("mousedown", e => {
+  gridUI.addEventListener("mousedown", (e) => {
     down = true;
     id = e.target.id;
 
@@ -72,7 +89,7 @@ function createWalls() {
     }
   });
 
-  gridUi.addEventListener("mouseover", e => {
+  gridUI.addEventListener("mouseover", (e) => {
     if (down) {
       id = e.target.id;
       var arr = id.split("-");
@@ -92,7 +109,7 @@ function createWalls() {
 
 module.exports = createWalls;
 
-},{"./../node":6}],4:[function(require,module,exports){
+},{"../grid":11}],6:[function(require,module,exports){
 const animation = require("./animation");
 
 function drawPath(start, end, visitedArray) {
@@ -100,7 +117,9 @@ function drawPath(start, end, visitedArray) {
 
   backwardPath.push(end);
 
+  console.log(end);
   var next = end.previous;
+  console.log(next);
   while (next.previous != undefined) {
     backwardPath.push(next);
     next = next.previous;
@@ -119,15 +138,15 @@ function drawPath(start, end, visitedArray) {
     pi = 0;
   for (var t = 0; t < forwardPath.length + visitedArray.length; t++) {
     if (t < visitedArray.length) {
-      (function(t) {
-        setTimeout(function() {
+      (function (t) {
+        setTimeout(function () {
           animation(visitedArray[vi].i + "-" + visitedArray[vi].j, "visited");
           vi++;
         }, 5 * t);
       })(t);
     } else {
-      (function(i) {
-        setTimeout(function() {
+      (function (i) {
+        setTimeout(function () {
           animation(forwardPath[pi].i + "-" + forwardPath[pi].j, "path");
           pi++;
         }, 5 * t);
@@ -137,34 +156,154 @@ function drawPath(start, end, visitedArray) {
 }
 module.exports = drawPath;
 
-},{"./animation":2}],5:[function(require,module,exports){
-const board = require("./board.js");
-const createWall = require("./graphics/createWall");
-const bfs = require("./pathfindingAlgorithm/dfs");
-// const startNode = require("./graphics/startAndEndNode");
-// startNode();
+},{"./animation":4}],7:[function(require,module,exports){
+// const grid = require("../grid");
 
-board();
+const setStart = require("./set/setStart");
 
-// startNode();
-createWall();
+function moveStart() {
+  var gridUi = document.getElementById("grid");
 
-const grid = require("./node");
+  var downy = false;
+  var id = "";
 
-var start = grid[2][2];
-var end = grid[2][23];
-document.getElementById("2-2").classList.add("start");
-document.getElementById("2-23").classList.add("target");
+  var elist = [];
+  var downy = false;
 
-// var algo = undefined;
-// document.getElementById("algo")
+  gridUi.addEventListener("mouseup", () => {
+    downy = false;
+    elist.length = 0;
+  });
 
-document.getElementById("visualize-btn").addEventListener("mousedown", e => {
-  console.log(start);
-  bfs(grid, start, end);
-});
+  gridUi.addEventListener("mousedown", (e) => {
+    var id = e.target.id;
+    var cell = document.getElementById(id);
+    if (cell.classList.contains("start")) {
+      downy = true;
+      elist.push(id);
+    }
+  });
 
-},{"./board.js":1,"./graphics/createWall":3,"./node":6,"./pathfindingAlgorithm/dfs":7}],6:[function(require,module,exports){
+  gridUi.addEventListener("mouseover", (e) => {
+    // console.log(start.current);
+    if (downy) {
+      var id = e.target.id;
+      elist.push(id);
+      var current = elist.shift();
+      var next = elist[0];
+
+      setStart(current, next);
+
+      // document.getElementById(startingNode).classList.remove("wall");
+    }
+  });
+}
+
+module.exports = moveStart;
+
+},{"./set/setStart":9}],8:[function(require,module,exports){
+// const grid = require("../grid");
+const setTarget = require("./set/setTarget");
+
+function moveTarget() {
+  var gridUi = document.getElementById("grid");
+
+  var downy = false;
+  var id = "";
+
+  var elist = [];
+  var downy = false;
+
+  gridUi.addEventListener("mouseup", () => {
+    downy = false;
+    elist.length = 0;
+  });
+
+  gridUi.addEventListener("mousedown", (e) => {
+    var id = e.target.id;
+    var cell = document.getElementById(id);
+    if (cell.classList.contains("target")) {
+      downy = true;
+      elist.push(id);
+    }
+  });
+
+  gridUi.addEventListener("mouseover", (e) => {
+    if (downy) {
+      var id = e.target.id;
+      elist.push(id);
+      var current = elist.shift();
+      var next = elist[0];
+
+      setTarget(current, next);
+
+      // document.getElementById(startingNode).classList.remove("wall");
+    }
+  });
+}
+
+module.exports = moveTarget;
+
+},{"./set/setTarget":10}],9:[function(require,module,exports){
+const grid = require("../../grid");
+var start = require("../../global_start");
+
+var setStart = function (current, next) {
+  var startIndexes = current.split("-");
+  var i = startIndexes[0];
+  var j = startIndexes[1];
+
+  if (next == null) {
+    document.getElementById(current).classList.add("start");
+    grid[i][j].start = true;
+  } else {
+    document.getElementById(current).classList.remove("start");
+    grid[i][j].start = false;
+    current = next;
+    start.current = current;
+    start.next = next;
+
+    var startIndexes = current.split("-");
+    i = startIndexes[0];
+    j = startIndexes[1];
+    grid[i][j].start = true;
+    document.getElementById(current).classList.add("start");
+  }
+};
+
+module.exports = setStart;
+
+},{"../../global_start":2,"../../grid":11}],10:[function(require,module,exports){
+const grid = require("../../grid");
+var target = require("../../golbal_target");
+
+var setTarget = function (current, next) {
+  var startIndexes = current.split("-");
+  var i = startIndexes[0];
+  var j = startIndexes[1];
+
+  if (next == null) {
+    document.getElementById(current).classList.add("target");
+    grid[i][j].start = true;
+  } else {
+    document.getElementById(current).classList.remove("target");
+    grid[i][j].start = false;
+    current = next;
+    target.current = current;
+    target.next = next;
+
+    var startIndexes = current.split("-");
+    i = startIndexes[0];
+    j = startIndexes[1];
+    grid[i][j].start = true;
+    document.getElementById(current).classList.add("target");
+  }
+};
+
+module.exports = setTarget;
+
+},{"../../golbal_target":3,"../../grid":11}],11:[function(require,module,exports){
+// this file is for programming
 var rows = 25;
 var columns = 75;
 
@@ -185,7 +324,7 @@ function spot(i, j) {
   this.visited = false;
   this.wall = false;
 
-  this.addNeighbors = function(grid) {
+  this.addNeighbors = function (grid) {
     var i = this.i;
     var j = this.j;
     if (i < rows - 1) {
@@ -229,10 +368,72 @@ for (var i = 0; i < rows; i++) {
 
 module.exports = grid;
 
-},{}],7:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
+const gridUI = require("./board.js");
+const createWall = require("./graphics/createWall");
+const bfs = require("./pathfindingAlgorithm/dfs");
+const moveStart = require("./graphics/moveStart");
+const moveTarget = require("./graphics/moveTarget");
+const setTarget = require("./graphics/set/setTarget");
+const setStart = require("./graphics/set/setStart");
+const grid = require("./grid");
+var start = require("./global_start");
+var target = require("./golbal_target");
+
+gridUI();
+moveStart();
+moveTarget();
+
+createWall();
+
+setStart(start.current, start.next);
+setTarget(target.current, target.next);
+
+// // code to get the selected algorithm
+// var algorithm = undefined;
+
+// var elements = document.getElementsByClassName("dropdownlist");
+// console.log(elements);
+// var myFunction = function () {
+//   algorithm = this.getAttribute("name");
+// };
+
+document.getElementById("visualize-btn").addEventListener("mousedown", (e) => {
+  // if (algorithm == undefined) {
+  //   window.alert("chooes the algorithm");
+  // } else {
+  //   switch (algorithm) {
+  //     case Dijkstras:
+  //       console.log(algorithm);
+  //       bfs(grid, start.current, target.current);
+  //       break;
+  //     case y:
+  //       // code block
+  //       break;
+  //     default:
+  //     // code block
+  //   }
+  // }
+  // console.log(algorithm);
+  console.log(start.current);
+  bfs(grid, start.current, target.current);
+});
+
+},{"./board.js":1,"./global_start":2,"./golbal_target":3,"./graphics/createWall":5,"./graphics/moveStart":7,"./graphics/moveTarget":8,"./graphics/set/setStart":9,"./graphics/set/setTarget":10,"./grid":11,"./pathfindingAlgorithm/dfs":13}],13:[function(require,module,exports){
 const drawPath = require("./../graphics/drawPath");
 
 function bfs(grid, start, end) {
+  var startIndexes = start.split("-");
+  var start_i = startIndexes[0];
+  var start_j = startIndexes[1];
+  var start = grid[start_i][start_j];
+  console.log(start_i, start_j);
+
+  var endIndexes = end.split("-");
+  var end_i = endIndexes[0];
+  var end_j = endIndexes[1];
+  var end = grid[end_i][end_j];
+
   var queue = [];
   var visitedArray = [];
   pathAvailable = false;
@@ -263,7 +464,7 @@ function bfs(grid, start, end) {
   }
 
   if (pathAvailable == false) {
-    drawPath("", "", visitedArray);
+    // drawPath("", "", visitedArray);
     window.alert("no path possible");
   } else {
     drawPath(start, end, visitedArray);
@@ -272,4 +473,4 @@ function bfs(grid, start, end) {
 
 module.exports = bfs;
 
-},{"./../graphics/drawPath":4}]},{},[5]);
+},{"./../graphics/drawPath":6}]},{},[12]);

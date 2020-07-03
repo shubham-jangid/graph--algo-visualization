@@ -1,25 +1,49 @@
-const board = require("./board.js");
+const gridUI = require("./board.js");
 const createWall = require("./graphics/createWall");
 const bfs = require("./pathfindingAlgorithm/dfs");
-// const startNode = require("./graphics/startAndEndNode");
-// startNode();
+const moveStart = require("./graphics/moveStart");
+const moveTarget = require("./graphics/moveTarget");
+const setTarget = require("./graphics/set/setTarget");
+const setStart = require("./graphics/set/setStart");
+const grid = require("./grid");
+var start = require("./global_start");
+var target = require("./golbal_target");
 
-board();
+gridUI();
+moveStart();
+moveTarget();
 
-// startNode();
 createWall();
 
-const grid = require("./node");
+setStart(start.current, start.next);
+setTarget(target.current, target.next);
 
-var start = grid[2][2];
-var end = grid[2][23];
-document.getElementById("2-2").classList.add("start");
-document.getElementById("2-23").classList.add("target");
+// // code to get the selected algorithm
+// var algorithm = undefined;
 
-// var algo = undefined;
-// document.getElementById("algo")
+// var elements = document.getElementsByClassName("dropdownlist");
+// console.log(elements);
+// var myFunction = function () {
+//   algorithm = this.getAttribute("name");
+// };
 
-document.getElementById("visualize-btn").addEventListener("mousedown", e => {
-  console.log(start);
-  bfs(grid, start, end);
+document.getElementById("visualize-btn").addEventListener("mousedown", (e) => {
+  // if (algorithm == undefined) {
+  //   window.alert("chooes the algorithm");
+  // } else {
+  //   switch (algorithm) {
+  //     case Dijkstras:
+  //       console.log(algorithm);
+  //       bfs(grid, start.current, target.current);
+  //       break;
+  //     case y:
+  //       // code block
+  //       break;
+  //     default:
+  //     // code block
+  //   }
+  // }
+  // console.log(algorithm);
+  console.log(start.current);
+  bfs(grid, start.current, target.current);
 });

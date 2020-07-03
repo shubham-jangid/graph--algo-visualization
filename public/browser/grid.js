@@ -1,3 +1,4 @@
+// this file is for programming
 var rows = 25;
 var columns = 75;
 
@@ -18,7 +19,7 @@ function spot(i, j) {
   this.visited = false;
   this.wall = false;
 
-  this.addNeighbors = function(grid) {
+  this.addNeighbors = function (grid) {
     var i = this.i;
     var j = this.j;
     if (i < rows - 1) {

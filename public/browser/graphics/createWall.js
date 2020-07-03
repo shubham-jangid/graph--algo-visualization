@@ -1,15 +1,15 @@
-const grid = require("./../node");
+const grid = require("../grid");
 
 function createWalls() {
-  var gridUi = document.getElementById("grid");
+  var gridUI = document.getElementById("grid");
   var down = false;
   var id = "";
 
-  gridUi.addEventListener("mouseup", () => {
+  gridUI.addEventListener("mouseup", () => {
     down = false;
   });
 
-  gridUi.addEventListener("mousedown", e => {
+  gridUI.addEventListener("mousedown", (e) => {
     down = true;
     id = e.target.id;
 
@@ -26,7 +26,7 @@ function createWalls() {
     }
   });
 
-  gridUi.addEventListener("mouseover", e => {
+  gridUI.addEventListener("mouseover", (e) => {
     if (down) {
       id = e.target.id;
       var arr = id.split("-");

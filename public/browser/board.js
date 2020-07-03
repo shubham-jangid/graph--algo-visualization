@@ -1,3 +1,4 @@
+// this function creat the grid UI
 function board() {
   var height = document.getElementById("grid").clientHeight;
   var width = document.getElementById("grid").clientWidth;

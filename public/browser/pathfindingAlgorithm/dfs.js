@@ -1,6 +1,17 @@
 const drawPath = require("./../graphics/drawPath");
 
 function bfs(grid, start, end) {
+  var startIndexes = start.split("-");
+  var start_i = startIndexes[0];
+  var start_j = startIndexes[1];
+  var start = grid[start_i][start_j];
+  console.log(start_i, start_j);
+
+  var endIndexes = end.split("-");
+  var end_i = endIndexes[0];
+  var end_j = endIndexes[1];
+  var end = grid[end_i][end_j];
+
   var queue = [];
   var visitedArray = [];
   pathAvailable = false;
@@ -31,7 +42,7 @@ function bfs(grid, start, end) {
   }
 
   if (pathAvailable == false) {
-    drawPath("", "", visitedArray);
+    // drawPath("", "", visitedArray);
     window.alert("no path possible");
   } else {
     drawPath(start, end, visitedArray);

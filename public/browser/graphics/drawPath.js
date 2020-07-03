@@ -5,7 +5,9 @@ function drawPath(start, end, visitedArray) {
 
   backwardPath.push(end);
 
+  console.log(end);
   var next = end.previous;
+  console.log(next);
   while (next.previous != undefined) {
     backwardPath.push(next);
     next = next.previous;
@@ -24,15 +26,15 @@ function drawPath(start, end, visitedArray) {
     pi = 0;
   for (var t = 0; t < forwardPath.length + visitedArray.length; t++) {
     if (t < visitedArray.length) {
-      (function(t) {
-        setTimeout(function() {
+      (function (t) {
+        setTimeout(function () {
           animation(visitedArray[vi].i + "-" + visitedArray[vi].j, "visited");
           vi++;
         }, 5 * t);
       })(t);
     } else {
-      (function(i) {
-        setTimeout(function() {
+      (function (i) {
+        setTimeout(function () {
           animation(forwardPath[pi].i + "-" + forwardPath[pi].j, "path");
           pi++;
         }, 5 * t);

@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <link rel="stylesheet" href="./public/styling/style.css">
+    <link rel="stylesheet" href="./public/styling/style.css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="navbar-container">
-
-        <div class="navbar-1">
-            <div class="logo">Pathfinding visualiser</div>
-            <div class="algorithm">Algorithms
-                <span id="caret"></span>
-                <div class="dropdown">
-                    <div id="Dijkstras">Dijkstra's Algorithm</div>
-                    <div id="Depth-first">Depth-first Search</div>
-                    <div id="A*">A* Search</div>
-                    <div id="Breadth-first">Breadth-first Search</div>
-                </div>
+      <div class="navbar-1">
+        <div class="logo">Pathfinding visualiser</div>
+        <div class="algorithm">
+          Algorithms
+          <span id="caret"></span>
+          <div class="dropdown">
+            <div class="dropdownlist" name="Dijkstras">
+              Dijkstra's Algorithm
             </div>
-            <button id="visualize-btn">Visualize!</button>
-            <div id="clearboard">Clear Board</div>
-            <div id="speed">Speed</div>
+            <div class="dropdownlist" name="Depth-first">
+              Depth-first Search
+            </div>
+            <div class="dropdownlist" name="A*">A* Search</div>
+            <div class="dropdownlist" name="Breadth-first">
+              Breadth-first Search
+            </div>
+          </div>
         </div>
+        <select id="options">
+          <option value="" disabled selected>Algorithms</option>
+          <option value="Dijkstras">Dijkstra's Algorithm</option>
+          <option value="Depth-first"> Depth-first Search2</option>
+          <option value="Breadth-first"> Breadth-first Search</option>
+        </select>
+        <button id="visualize-btn">Visualize!</button>
+        <div id="clearboard">Clear Board</div>
+        <div id="speed">Speed</div>
+      </div>
 
-        <div class="navbar-2">
+      <!-- <div class="navbar-2">
             <div id="startValue">
                 <label for="starting node value">starting node value :</label>
                 <input type="number" placeholder="row">
@@ -43,18 +53,13 @@
                 <input type="number" placeholder="column">
             </div>
 
-        </div>
-
+        </div> -->
     </div>
 
     <div class="grid-container">
-        <div id="grid">
-        </div>
+      <div id="grid"></div>
     </div>
 
-
     <script src="./public/browser/bundle.js"></script>
-
-</body>
-
+  </body>
 </html>
