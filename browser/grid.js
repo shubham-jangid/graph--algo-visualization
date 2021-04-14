@@ -61,4 +61,4 @@ for (var i = 0; i < rows; i++) {
   }
 }
 
-module.exports = grid;
+export default grid;

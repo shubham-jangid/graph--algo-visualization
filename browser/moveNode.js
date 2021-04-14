@@ -1,43 +1,41 @@
-// const grid = require("../grid");
-
-const setStart = require("./set/setStart");
-
-function moveStart() {
+import { setNode } from "./setNode.js";
+function moveNode() {
   var gridUi = document.getElementById("grid");
-
-  var downy = false;
-  var id = "";
-
+  var nodeType = "";
   var elist = [];
-  var downy = false;
+  var isMouseDown = false;
 
   gridUi.addEventListener("mouseup", () => {
-    downy = false;
+    isMouseDown = false;
     elist.length = 0;
   });
 
   gridUi.addEventListener("mousedown", (e) => {
     var id = e.target.id;
     var cell = document.getElementById(id);
-    if (cell.classList.contains("start")) {
-      downy = true;
+    console.log(cell.classList);
+    nodeType = cell.classList.value;
+    console.log(nodeType);
+
+    if (nodeType == "start" || nodeType == "target") {
+      isMouseDown = true;
       elist.push(id);
     }
   });
 
   gridUi.addEventListener("mouseover", (e) => {
-    // console.log(start.current);
-    if (downy) {
+    if (isMouseDown) {
       var id = e.target.id;
       elist.push(id);
       var current = elist.shift();
       var next = elist[0];
+      console.log(isMouseDown);
 
-      setStart(current, next);
+      setNode(current, next, nodeType);
 
       // document.getElementById(startingNode).classList.remove("wall");
     }
   });
 }
 
-module.exports = moveStart;
+module.exports = moveNode;
