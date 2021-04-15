@@ -1,4 +1,5 @@
 import { setNode } from "./setNode.js";
+
 function moveNode() {
   var gridUi = document.getElementById("grid");
   var nodeType = "";
@@ -38,4 +39,4 @@ function moveNode() {
   });
 }
 
-module.exports = moveNode;
+export { moveNode };

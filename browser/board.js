@@ -1,9 +1,9 @@
-import { nodes } from "./nodes.js";
-
-window.rows = 0;
-window.columns = 0;
-
-function drawboard(rows, columns) {
+function drawboard() {
+  let navbarHeight = document.getElementById("navbar").clientHeight;
+  let width = window.innerWidth;
+  let height = window.innerHeight - navbarHeight - 20;
+  window.rows = Math.floor(height / 21);
+  window.columns = Math.floor(width / 21);
   let tableDiv = document.getElementById("grid");
   let table = document.createElement("table");
   let tbody = document.createElement("tbody");
@@ -16,8 +16,6 @@ function drawboard(rows, columns) {
       Uinode.style.height = 20 + "px";
       Uinode.setAttribute("id", row + "-" + column);
       trow.appendChild(Uinode);
-
-      // board[row][column].addNeighbour(row, column, rows, columns, board);
     }
     tbody.appendChild(trow);
   }
@@ -25,13 +23,4 @@ function drawboard(rows, columns) {
   tableDiv.appendChild(table);
 }
 
-function board() {
-  let navbarHeight = document.getElementById("navbar").clientHeight;
-  let width = window.innerWidth;
-  let height = window.innerHeight - navbarHeight - 20;
-  window.rows = Math.floor(height / 21);
-  window.columns = Math.floor(width / 21);
-  drawboard(window.rows, window.columns);
-}
-
-export { board };
+export { drawboard };
