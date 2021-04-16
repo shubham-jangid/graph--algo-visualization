@@ -1,4 +1,5 @@
 import { bfs } from "./algorithms/bfs.js";
+import { dfs } from "./algorithms/dfs.js";
 
 var algorithm = undefined;
 
@@ -20,7 +21,7 @@ const algoListner = function () {
             bfs();
             break;
           case "Depth-first":
-            // dfs(grid, start.current, target.current);
+            dfs();
             break;
         }
       }

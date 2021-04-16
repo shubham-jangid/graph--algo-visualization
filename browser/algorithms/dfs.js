@@ -2,36 +2,37 @@
 import { nodes } from "../nodes.js";
 import { drawPath } from "../drawPath.js";
 
-function bfs() {
+function dfs() {
   var startIndexes = window.startNode.current.split("-");
   var startNode = nodes[startIndexes[0]][startIndexes[1]];
 
   var targetIndexes = window.targetNode.current.split("-");
   var targetNode = nodes[targetIndexes[0]][targetIndexes[1]];
 
-  var queue = [];
+  var stack = [];
   var visitedArray = [];
   var pathAvailable = false;
 
-  queue.push(startNode);
+  stack.push(startNode);
   startNode.visited = true;
 
-  while (queue.length != 0) {
-    var v = queue.shift();
+  while (stack.length != 0) {
+    var v = stack.pop();
 
     if (v.i == targetNode.i && v.j == targetNode.j) {
       pathAvailable = true;
       break;
     }
+    if (!v.visited) {
+      v.visited = true;
+      for (var i = 0; i < v.neighbours.length; i++) {
+        var neighbour = v.neighbours[i];
 
-    for (var i = 0; i < v.neighbours.length; i++) {
-      var neighbour = v.neighbours[i];
-
-      if (neighbour.visited != true && neighbour.wall == false) {
-        queue.push(neighbour);
-        neighbour.previous = v;
-        neighbour.visited = true;
-        visitedArray.push(neighbour);
+        if (neighbour.visited != true && neighbour.wall == false) {
+          stack.push(neighbour);
+          neighbour.previous = v;
+          visitedArray.push(neighbour);
+        }
       }
     }
   }
@@ -43,4 +44,4 @@ function bfs() {
   }
 }
 
-export { bfs };
+export { dfs };
