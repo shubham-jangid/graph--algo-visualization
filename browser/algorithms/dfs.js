@@ -14,24 +14,21 @@ function dfs() {
   var pathAvailable = false;
 
   stack.push(startNode);
-  startNode.visited = true;
 
-  while (stack.length != 0) {
+  aLoop: while (stack.length != 0) {
     var v = stack.pop();
 
-    if (v.i == targetNode.i && v.j == targetNode.j) {
-      pathAvailable = true;
-      break;
-    }
-    if (!v.visited) {
-      v.visited = true;
-      for (var i = 0; i < v.neighbours.length; i++) {
-        var neighbour = v.neighbours[i];
+    v.visited = true;
+    visitedArray.push(v);
 
-        if (neighbour.visited != true && neighbour.wall == false) {
-          stack.push(neighbour);
-          neighbour.previous = v;
-          visitedArray.push(neighbour);
+    for (var i = 0; i < v.neighbours.length; i++) {
+      var neighbour = v.neighbours[i];
+      if (neighbour.visited != true && neighbour.wall == false) {
+        stack.push(neighbour);
+        neighbour.previous = v;
+        if (neighbour.i == targetNode.i && neighbour.j == targetNode.j) {
+          pathAvailable = true;
+          break aLoop;
         }
       }
     }

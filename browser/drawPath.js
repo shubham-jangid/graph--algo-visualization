@@ -29,14 +29,14 @@ function drawPath(start, end, visitedArray) {
         setTimeout(function () {
           animation(visitedArray[vi].i + "-" + visitedArray[vi].j, "visited");
           vi++;
-        }, 5 * t);
+        }, window.speed * t);
       })(t);
     } else {
       (function (i) {
         setTimeout(function () {
           animation(forwardPath[pi].i + "-" + forwardPath[pi].j, "path");
           pi++;
-        }, 5 * t);
+        }, window.speed * t);
       })(t);
     }
   }

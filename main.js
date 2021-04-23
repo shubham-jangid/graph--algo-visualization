@@ -8,6 +8,7 @@ import { removeWalls } from "./browser/removeWalls.js";
 import { resetBoard } from "./browser/resetBoard.js";
 window.rows = 0;
 window.columns = 0;
+window.speed = 5;
 
 window.startNode = {
   current: "10-17",
