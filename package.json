@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/shubham-jangid/graph--algo-visualization/issues"
   },
-  "homepage": "https://github.com/shubham-jangid/graph--algo-visualization#readme"
+  "homepage": "https://github.com/shubham-jangid/graph--algo-visualization#readme",
+  "dependencies": {
+    "intro.js": "^4.1.0"
+  }
 }
